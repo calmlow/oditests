@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>odi-package</role-hint>
+            <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+            <configuration>
+                <phases>
+                    <!--use the basic jar lifecycle bindings, add additional executions in here if you want anything extra to be run-->
+                    <!-- <generate-sources>oracle:maven-unpack-plugin:1.0.5-SNAPSHOT:unpack,oracle:maven-composite-plugin:1.7.0-SNAPSHOT:create-adf-config</generate-sources> -->
+                    <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>
+                    <!-- <compile>oracle:maven-composite-plugin:1.7.0-SNAPSHOT:compile</compile>-->
+                    <package>org.apache.maven.plugins:maven-jar-plugin:jar</package>
+                    <verify>com.github.calmlow:odi-maven-plugin:1.0.0-SNAPSHOT:verify</verify>
+                    <install>com.github.calmlow:odi-maven-plugin:1.0.0-SNAPSHOT:genscen,org.apache.maven.plugins:maven-install-plugin:install</install>
+                    <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+                </phases>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>odi-package</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <!--the extension used by Maven in the repository-->
+                <extension>jar</extension>
+                <!--the type used when specifying dependencies etc.-->
+                <type>odi-package</type>
+                <!--the packaging used when declaring an implementation of the packaging-->
+                <packaging>odi-package</packaging>
+            </configuration>
+        </component>
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>odi-procedure</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>jar</extension>
+                <type>odi-procedure</type>
+                <packaging>odi-procedure</packaging>
+            </configuration>
+        </component>
+    </components>
+</component-set>
